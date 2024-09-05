@@ -2,6 +2,14 @@ const organization = require("./organizationModel");
 
 const organizationService = {};
 
+organizationService.create = (name, admin, domainAddress) =>
+  organization.create({ name, admin, domainAddress });
+organizationService.count = (params) => organization.count(params);
+organizationService.findOne = (params) => organization.findOne(params);
+
+organizationService.updateMemberCount = (id, count) =>
+  organization.findByIdAndUpdate(id, { $set: { noOfMembers: count } });
+
 organizationService.getOrganization = (data, skip, limit) =>
   organization
     .find(data)
@@ -16,17 +24,8 @@ organizationService.getOneOrganization = (id) =>
 organizationService.changeStatus = async (id, status) =>
   await organization.updateOne({ _id: id }, { $set: { status: status } });
 
-// organizationService.getOrganizationIDs = (filter) => organization.find(filter).select({ _id: 1 });
-
-// organizationService.getOneOrganization = (id) =>
-//   organization.findById({ _id: id }).populate({ path: "admin" });
-
 organizationService.countOrganization = (data) =>
   organization.countDocuments(data);
-
-// organizationService.updateMembersCount = (id,count)=> organization.findByIdAndUpdate(id,{$set:{noOfMembers:count}})
-
-// organizationService.deleteOrganization = (id) => organization.findByIdAndDelete(id);
 
 organizationService.getAll = () => organization.find({}).lean().exec();
 

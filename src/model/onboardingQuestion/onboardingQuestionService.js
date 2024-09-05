@@ -2,9 +2,6 @@ const onboardingQuestion = require("./onboardingQuestionModel");
 
 const onboardingQuestionService = {};
 
-onboardingQuestionService.getOnboardingQuestions = (data) =>
-  onboardingQuestion.find(data);
-
 onboardingQuestionService.createOneOnboardingQuestion = (data) =>
   onboardingQuestion.create(data);
 
@@ -19,5 +16,11 @@ onboardingQuestionService.deleteOnboardingQuestion = (id) =>
 
 onboardingQuestionService.getNewlyAdded = async (dt) =>
   onboardingQuestion.find({ createdAt: { $gte: dt } });
+
+onboardingQuestionService.getOnboardingQuestions = (data) =>
+  onboardingQuestion.find(data).sort({ order: 1 });
+
+onboardingQuestionService.getOnboardingQuestionsLength = (data) =>
+  onboardingQuestion.count(data);
 
 module.exports = onboardingQuestionService;
